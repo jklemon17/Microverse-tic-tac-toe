@@ -1,50 +1,45 @@
 #This is our game file
 class TicTacToe
-  attr_accessor :turn, :player1, :player2, :current_grid 
+  attr_accessor :turn, :player1, :player2, :squares
   def initialize
-    @turn = 0
+    @turn = "X"
     puts "Please enter Player 1's name:"
     @player1 = Player.new(gets.chomp, "X")
     puts "Please enter Player 2's name:"
     @player2 = Player.new(gets.chomp, "O")
-    @current_grid = Grid.new
+    # build the grid
+    @squares = {}
+    ('a'..'c').each do |letter|
+        (1..3).each do |number|
+          name = letter.to_s + number.to_s
+          @squares[name] = Square.new(name)
+        end
+    end
   end
 
-  # def ask_next_player(marker)
-  #   if marker = "X"
-  #     ask player2
-  #   else
-  #     ask player1
-  #   end
-  # end
+  def ask_player
+    puts "#{@turn == "X" ? @player1.name : @player2.name}, choose a square: (a1 to c3)"
+    gets.chomp
 
-end
+    # if marker = "X"
+    #   ask player2
+    # else
+    #   ask player1
+    # end
+  end
 
-class Grid
-    def initialize()
-      @squares = {}
-      ('a'..'c').each do |letter|
-          (1..3).each do |number|
-            name = letter.to_s + number.to_s
-            @squares[name] = Square.new(name)
-          end
-      end
-    end
-
-
-  # def update_square(marker, target)
+  def update_square(marker, target)
   #
   #   if @squares[target].state != "_"
   #     puts "That target is not blank, please pick a blank one"
   #     target = gets.chomp
   #     update_square(marker, target)
   #   else
-  #       @squares[target].state = marker
+        @squares[target].state = marker
   #   end
-  #   display_grid
-  # end
-
-
+    #display_grid
+    # ask_player
+  end
 
   def display_grid
 
@@ -54,7 +49,13 @@ class Grid
 
   end
 
+  def change_turn
+    @turn = @turn == "X" ? "O" : "X"
+  end
 
+  def game_over
+    false
+  end
 end
 
 class Square
@@ -98,11 +99,14 @@ current_game = TicTacToe.new
 puts "Player 1's name is: #{current_game.player1.name}. They are using the #{current_game.player1.marker}"
 puts "Player 2's name is: #{current_game.player2.name}. They are using the #{current_game.player2.marker}"
 
+current_game.display_grid
 
-current_game.current_grid.display_grid
-
-
-
+until current_game.game_over
+  target_square = current_game.ask_player()
+  current_game.update_square(current_game.turn, target_square)
+  current_game.display_grid
+  current_game.change_turn
+end
 
 
 # update_square(marker, target)
