@@ -29,23 +29,32 @@ class TicTacToe
   end
 
   def update_square(marker, target)
-  #
-  #   if @squares[target].state != "_"
-  #     puts "That target is not blank, please pick a blank one"
-  #     target = gets.chomp
-  #     update_square(marker, target)
-  #   else
-        @squares[target].state = marker
-  #   end
-    #display_grid
-    # ask_player
+
+    # check if valid input
+    if @squares.keys.include?(target) == false
+      puts "That is not a valid square,\n
+      target must be made of a letter from a to c, followed by a number from 1 to 3.\n
+      Example 'b2'.\n
+      Please enter a target square:"
+      update_square(marker, gets.strip.chomp)
+
+    # check if blank:
+    elsif @squares[target].state != "_"
+      puts "That target is not blank, please pick a blank one"
+      update_square(marker, gets.chomp)
+    else
+      @squares[target].state = marker
+    end
+
   end
 
   def display_grid
 
-    puts "#{@squares["a1"].state}|#{@squares["a2"].state}|#{@squares["a3"].state}\n"
-    puts "#{@squares["b1"].state}|#{@squares["b2"].state}|#{@squares["b3"].state}\n"
-    puts "#{@squares["c1"].state}|#{@squares["c2"].state}|#{@squares["c3"].state}"
+    puts "\n"
+    puts "  1 2 3"
+    puts "a #{@squares["a1"].state}|#{@squares["a2"].state}|#{@squares["a3"].state}\n"
+    puts "b #{@squares["b1"].state}|#{@squares["b2"].state}|#{@squares["b3"].state}\n"
+    puts "c #{@squares["c1"].state}|#{@squares["c2"].state}|#{@squares["c3"].state}"
 
   end
 
@@ -54,7 +63,9 @@ class TicTacToe
   end
 
   def game_over
-    false
+    # check the rows
+    # check the columns
+    # check the diagonals
   end
 end
 
@@ -83,15 +94,6 @@ end
 
 
 
-
-#
-# until TicTacToe.game_over
-#
-# end
-#    1 2 3
-# a  o|x|o
-# b  x|_|x
-# c  o|_|x
 
 
 current_game = TicTacToe.new
