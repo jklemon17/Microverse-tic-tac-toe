@@ -64,6 +64,15 @@ class TicTacToe
 
   def game_over
     # check the rows
+    if @squares["a1"].state == "X" && @squares["a2"].state == @squares["a1"].state && @squares["a3"].state == @squares["a1"].state
+        true
+    end
+    if @squares["b1"].state != "_" && @squares["b2"].state == @squares["b1"].state && @squares["b3"].state == @squares["b1"].state
+        true
+    end
+    if @squares["c1"].state != "_" && @squares["c2"].state == @squares["c1"].state && @squares["c3"].state == @squares["c1"].state
+        true
+    end
     # check the columns
     # check the diagonals
   end
@@ -109,6 +118,9 @@ until current_game.game_over
   current_game.display_grid
   current_game.change_turn
 end
+
+puts "#{current_game.turn == "X" ? current_game.player1.name : current_game.player2.name} Wins!"
+
 
 
 # update_square(marker, target)
