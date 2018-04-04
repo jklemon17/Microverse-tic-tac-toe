@@ -56,3 +56,45 @@ describe Square do
   end
 
 end
+
+describe TicTacToe do
+
+  # build one instance of a Square first
+  before do
+    @player1 = Player.new("Kyle", "X")
+    @player2 = Player.new("Paul", "O")
+    @current_game = TicTacToe.new(@player1, @player2)
+    @current_game.change_turn
+  end
+
+
+  describe "#change_turn" do
+    context "when a player has finished their move" do
+      it "the turn variable should change" do
+        # Testing that player name and marker initialize correctly.
+        expect(@current_game.turn).to eql("O")
+      end
+
+
+      it "the turn variable should change" do
+        # Testing that player name and marker initialize correctly.
+        # NOTE CANT DO A "before do"  within an a test/example
+        # before do
+          @current_game.change_turn
+        # end
+        expect(@current_game.turn).to eql("X")
+      end
+
+    end
+  end
+
+  # describe "#name=" do
+  #   context "trying to change name" do
+  #     it "raises a NoMethodError" do
+  #       # Testing that the name of a square cannot be changed
+  #       expect { @square.name="c3" }.to raise_error(NoMethodError)
+  #     end
+  #   end
+  # end
+
+end
