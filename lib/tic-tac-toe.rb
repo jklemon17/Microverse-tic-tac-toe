@@ -57,7 +57,6 @@ class TicTacToe
   end
 
   def game_over
-
     a1 = @squares["a1"].state
     a2 = @squares["a2"].state
     a3 = @squares["a3"].state
@@ -82,7 +81,6 @@ class TicTacToe
 
     # check for draw
     return "draw" if all_squares.none? {|square| square == "_"}
-
   end
 end
 
