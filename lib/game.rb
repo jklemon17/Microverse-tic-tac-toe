@@ -52,14 +52,14 @@ class TicTacToe
     puts '  1 2 3'
     puts "a #{@squares['a1'].state}|#{@squares['a2'].state}|#{@squares['a3'].state}\n"
     puts "b #{@squares['b1'].state}|#{@squares['b2'].state}|#{@squares['b3'].state}\n"
-    puts "c #{@squares['c1'].state}|#{@squares['c2'].state}|#{@squares['c3'].state}"
+    puts "c #{@squares['c1'].state}|#{@squares['c2'].state}|#{@squares['c3'].state}\n\n"
   end
 
   def change_turn
     @turn = @turn == 'X' ? 'O' : 'X'
   end
 
-  def game_outcome
+  def outcome
     a1 = @squares['a1'].state
     a2 = @squares['a2'].state
     a3 = @squares['a3'].state
@@ -88,6 +88,6 @@ class TicTacToe
 
   def game_over?
     # game_over? is only true when one of the below is true.
-    game_outcome == 'win' || game_outcome == 'draw'
+    outcome == 'win' || outcome == 'draw'
   end
 end
