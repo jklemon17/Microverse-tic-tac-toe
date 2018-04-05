@@ -47,7 +47,7 @@ loop do
   quit = false
 
   display_player_names(player1, player2)
-  current_game = TicTacToe.new(player1, player2)
+  current_game = Game.new(player1, player2)
   current_game.display_grid
 
   until current_game.game_over?
