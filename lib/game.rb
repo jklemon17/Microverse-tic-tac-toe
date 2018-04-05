@@ -2,14 +2,14 @@ require_relative 'player'
 require_relative 'square'
 
 # This is the class that controls the gameplay.
-class TicTacToe
+class Game
   attr_accessor :player1, :player2
   attr_reader :turn, :squares
 
   def initialize(player1, player2)
     @player1 = player1
     @player2 = player2
-    @turn = 'X'
+    @turn_marker = 'X'
     # build the grid
     @squares = {}
     ('a'..'c').each do |letter|
@@ -21,31 +21,34 @@ class TicTacToe
   end
 
   def ask_player
-    puts "#{@turn == 'X' ? @player1.name : @player2.name}, choose a square: (a1 to c3)"
+    puts "#{@turn_marker == 'X' ? @player1.name : @player2.name}, choose a square: (a1 to c3)"
     gets.chomp
   end
 
-  def update_square(marker, target)
-    # if player wants to quit
-    # use .downcase to account for 'Q' and 'q'.  [0] is to check only the first letter, to account for if user types the whole word 'Quit'
-    return 'q' if target.downcase[0] == 'q'
-
-    # check if valid input
+  def check_if_valid(target)
+    # check if target exists in the grid
     if @squares.keys.include?(target) == false
-      puts "That is not a valid square,\n
-      target must be made of a letter from a to c, followed by a number from 1 to 3.\n
-      Example 'b2'.\n
-      Please enter a target square:"
-      update_square(marker, gets.strip.chomp)
+      puts "That is not a valid square,\n" +
+      "target must be made of a letter from a to c, followed by a number from 1 to 3.\n" +
+      "Example 'b2'.\n\n"
+      return false
 
     # check if blank:
     elsif @squares[target].state != '_'
-      puts 'That target is not blank, please pick a blank one'
-      update_square(marker, gets.chomp)
+      puts "That target is not blank\n\n"
+      return false
+
+    # it passes!
     else
-      @squares[target].state = marker
+      return true
     end
   end
+
+  def update_square(target)
+      @squares[target].state = @turn_marker
+  end
+
+
 
   def display_grid
     puts "\n"
@@ -56,7 +59,7 @@ class TicTacToe
   end
 
   def change_turn
-    @turn = @turn == 'X' ? 'O' : 'X'
+    @turn_marker = @turn_marker == 'X' ? 'O' : 'X'
   end
 
   def outcome
@@ -70,8 +73,6 @@ class TicTacToe
     c2 = @squares['c2'].state
     c3 = @squares['c3'].state
 
-    all_squares = [a1, a2, a3, b1, b2, b3, c1, c2, c3]
-
     # check the rows, columns, diagonals
     return 'win' if (a1 != '_' && a2 == a1 && a3 == a1) ||
                     (b1 != '_' && b2 == b1 && b3 == b1) ||
@@ -83,8 +84,11 @@ class TicTacToe
                     (a3 != '_' && b2 == a3 && c1 == a3)
 
     # check for draw
-    return 'draw' if all_squares.none? { |square| square == '_' }
+    # all_squares = [a1, a2, a3, b1, b2, b3, c1, c2, c3]
+    # return 'draw' if all_squares.none? { |square| square == '_' }
+    return 'draw' if @squares.none? { |key, square| square.state == '_' }
   end
+
 
   def game_over?
     # game_over? is only true when one of the below is true.
