@@ -1,19 +1,44 @@
 require_relative '../lib/game.rb'
 
-# Begin game
-# puts 'Please enter Player 1's name:'
-# player1 = Player.new(gets.chomp, 'X')
-# puts 'Please enter Player 2's name:'
-# player2 = Player.new(gets.chomp, 'O')
-
 # redone to account for the user not entering a name before pressing enter
 # solved by prividing a default value:
-puts "Please enter Player 1's name:"
-name = gets.chomp
-player1 = Player.new(name == '' ? 'Player 1' : name, 'X')
-puts "Please enter Player 2's name:"
-name = gets.chomp
-player2 = Player.new(name == '' ? 'Player 2' : name, 'O')
+def name_players(player1, player2)
+  puts "Please enter player 1's name:"
+  player1.name = gets.chomp
+  puts "Please enter player 1's name:"
+  player2.name = gets.chomp
+end
+
+def display_player_names(player1, player2)
+  puts "\n#{player1.name} is using the #{player1.marker}."
+  puts "#{player2.name} is using the #{player2.marker}."
+end
+
+def display_outcome(outcome, turn, player1, player2)
+  if outcome == 'win'
+    puts "\n#{turn == 'X' ? player2.name : player1.name} Wins!"
+  else
+    puts "\nThe game is a draw."
+  end
+end
+
+def play_again?
+  puts 'Want to play again?  Y/N'
+  # use .downcase to account for 'N' and 'n'.
+  # [0] is to check only the first letter, accounting for user typing 'no'
+  gets.chomp.downcase[0] != 'n'
+end
+
+def rename_players_prompt(player1, player2)
+  puts 'Would you like to rename the players? Y/N'
+  name_players(player1, player2) if gets.chomp.downcase[0] == 'y'
+end
+# I know!
+
+player1 = Player.new('Player 1', 'X')
+player2 = Player.new('Player 2', 'O')
+
+name_players(player1, player2)
 
 # This will perpetually reset the game until a win condition occurs and
 # the user types 'N' when asked if they want to continue
@@ -21,12 +46,8 @@ player2 = Player.new(name == '' ? 'Player 2' : name, 'O')
 loop do
   quit = false
 
-  puts "\n"
-  puts "#{player1.name} is using the #{player1.marker}."
-  puts "#{player2.name} is using the #{player2.marker}."
-
+  display_player_names(player1, player2)
   current_game = TicTacToe.new(player1, player2)
-
   current_game.display_grid
 
   until current_game.game_over?
@@ -36,22 +57,17 @@ loop do
       quit = true
       break
     end
-    current_game.display_grid
     current_game.change_turn
+    current_game.display_grid
   end
 
   break if quit
 
-  if current_game.game_outcome == 'win'
-    puts "\n#{current_game.turn == 'X' ? current_game.player2.name : current_game.player1.name} Wins!"
-  else
-    puts "\nThe game is a draw."
-  end
+  display_outcome(current_game.outcome, current_game.turn,
+                  current_game.player1, current_game.player2)
 
-  puts 'Want to play again with same players?  Y/N'
-  # use .downcase to account for 'N' and 'n'.
-  # [0] is to check only the first letter, accounting for user typing 'no'
-  break if gets.chomp.downcase[0] == 'n'
+  break unless play_again?
+  rename_players_prompt(player1, player2)
 end
 
 puts "\nThanks for playing!"
