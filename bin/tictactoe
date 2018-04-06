@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require_relative '../lib/game.rb'
 require_relative '../lib/messages.rb'
 # removed methods into seperate file "messages.rb"
