@@ -4,7 +4,7 @@ require_relative 'square'
 # This is the class that controls the gameplay.
 class Game
   attr_accessor :player1, :player2
-  attr_reader :turn, :squares
+  attr_reader :turn_marker, :squares
 
   def initialize(player1, player2)
     @player1 = player1

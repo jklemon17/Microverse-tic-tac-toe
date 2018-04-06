@@ -1,4 +1,5 @@
-require 'tic-tac-toe'
+# require 'tictactoe'
+require 'game'
 
 describe Player do
   # build one instance of a player first
@@ -51,13 +52,13 @@ describe Square do
 
 end
 
-describe TicTacToe do
+describe Game do
 
   # build one instance of a Square first
   before do
     @player1 = Player.new("Kyle", "X")
     @player2 = Player.new("Paul", "O")
-    @current_game = TicTacToe.new(@player1, @player2)
+    @current_game = Game.new(@player1, @player2)
     @current_game.change_turn
   end
 
@@ -66,7 +67,7 @@ describe TicTacToe do
     context "when a player has finished their move" do
       it "the turn variable should change" do
         # Testing that player name and marker initialize correctly.
-        expect(@current_game.turn).to eql("O")
+        expect(@current_game.turn_marker).to eql("O")
       end
 
 
@@ -76,11 +77,22 @@ describe TicTacToe do
         # before do
           @current_game.change_turn
         # end
-        expect(@current_game.turn).to eql("X")
+        expect(@current_game.turn_marker).to eql("X")
       end
 
     end
   end
+
+
+  # Tests to perform:
+  # check if winner
+  # check for correct winner
+  # check if draw (board full and no winner)
+  # check for invalid target square (c5, d2...)
+  # check for square not empty
+  # check for square gets updated
+  # check for rename players
+
 
   # describe "#name=" do
   #   context "trying to change name" do

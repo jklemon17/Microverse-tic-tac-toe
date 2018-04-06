@@ -13,9 +13,9 @@ def display_player_names(player1, player2)
   puts "#{player2.name} is using the #{player2.marker}."
 end
 
-def display_outcome(outcome, turn, player1, player2)
+def display_outcome(outcome, turn_marker, player1, player2)
   if outcome == 'win'
-    puts "\n#{turn == 'X' ? player2.name : player1.name} Wins!"
+    puts "\n#{turn_marker == 'X' ? player2.name : player1.name} Wins!"
   else
     puts "\nThe game is a draw."
   end

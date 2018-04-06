@@ -37,7 +37,7 @@ loop do
 
   break if quit
 
-  display_outcome(current_game.outcome, current_game.turn,
+  display_outcome(current_game.outcome, current_game.turn_marker,
                   current_game.player1, current_game.player2)
 
   break unless play_again?
