@@ -2,7 +2,9 @@
 
 This is a two-player tic-tac-toe game built with Ruby that is played using the terminal/command prompt.
 
-To run the game, you must have Ruby installed. Run 'ruby bin/tictactoe.rb' from within the main folder.
+To install the game, run install.sh from the terminal by typing './install.sh'. (Note that this will not work on Windows.)
+
+To run the game, type 'tictactoe' from the terminal.
 
 To play, each player will type the coordinates of the square in which they wish to place their mark. The squares are identified as follows:
 
