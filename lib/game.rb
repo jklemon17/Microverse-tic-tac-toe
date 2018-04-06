@@ -1,3 +1,5 @@
+require 'yaml'
+require 'json'
 require_relative 'player'
 require_relative 'square'
 
@@ -89,9 +91,24 @@ class Game
     return 'draw' if @squares.none? { |key, square| square.state == '_' }
   end
 
-
   def game_over?
     # game_over? is only true when one of the below is true.
     outcome == 'win' || outcome == 'draw'
+  end
+
+  def to_json
+    JSON.dump({
+      :player1 => @player1,
+      :player2 => @player2,
+      :turn_marker => @turn_marker,
+      :squares => @squares
+    })
+  end
+  
+  def save_game
+    # To use json format, must have additional to_json and from_json methods
+    File.open('savegame_json', 'w') { |file| file.write(to_json) }
+
+    File.open('savegame_yaml', 'w') { |file| file.write(YAML.dump(self)) }
   end
 end

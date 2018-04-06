@@ -28,11 +28,13 @@ loop do
       until current_game.check_if_valid(target_square) == true
         target_square = current_game.ask_player
       end
-       current_game.update_square(target_square)
+      current_game.update_square(target_square)
     end
 
     current_game.change_turn
     current_game.display_grid
+    # This will save the game to a file called 'savegame' after every turn
+    current_game.save_game
   end
 
   break if quit
