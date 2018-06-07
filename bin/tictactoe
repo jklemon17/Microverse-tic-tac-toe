@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+require_relative '../lib/game.rb'
+require_relative '../lib/messages.rb'
+# removed methods into seperate file "messages.rb"
+
+player1 = Player.new('Player 1', 'X')
+player2 = Player.new('Player 2', 'O')
+
+name_players(player1, player2)
+
+# This will perpetually reset the game until a win condition occurs
+# and the user types 'N' when asked if they want to continue
+# or until the player types 'quit'
+loop do
+  quit = false
+
+  display_player_names(player1, player2)
+  current_game = Game.new(player1, player2)
+  current_game.display_grid
+
+  until current_game.game_over?
+    target_square = current_game.ask_player
+    # Allow player to quit at any time by typing 'quit'
+    if target_square.downcase[0] == 'q'
+      quit = true
+      break
+    else
+      until current_game.check_if_valid(target_square) == true
+        target_square = current_game.ask_player
+      end
+      current_game.update_square(target_square)
+    end
+
+    current_game.change_turn
+    current_game.display_grid
+    # This will save the game to a file called 'savegame' after every turn
+    current_game.save_game
+  end
+
+  break if quit
+
+  display_outcome(current_game.outcome, current_game.turn_marker,
+                  current_game.player1, current_game.player2)
+
+  break unless play_again?
+  rename_players_prompt(player1, player2)
+end
+
+puts "\nThanks for playing!"

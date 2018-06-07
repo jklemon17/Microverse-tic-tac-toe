@@ -1,0 +1,36 @@
+--- !ruby/object:Game
+player1: !ruby/object:Player
+  name: a
+  marker: X
+player2: !ruby/object:Player
+  name: b
+  marker: O
+turn_marker: O
+squares:
+  a1: !ruby/object:Square
+    name: a1
+    state: X
+  a2: !ruby/object:Square
+    name: a2
+    state: _
+  a3: !ruby/object:Square
+    name: a3
+    state: _
+  b1: !ruby/object:Square
+    name: b1
+    state: _
+  b2: !ruby/object:Square
+    name: b2
+    state: _
+  b3: !ruby/object:Square
+    name: b3
+    state: _
+  c1: !ruby/object:Square
+    name: c1
+    state: _
+  c2: !ruby/object:Square
+    name: c2
+    state: _
+  c3: !ruby/object:Square
+    name: c3
+    state: _
